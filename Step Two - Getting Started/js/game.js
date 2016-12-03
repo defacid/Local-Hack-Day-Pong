@@ -5,12 +5,14 @@ var properties = {
 };
 
 // Initialize the game as an instance of the Phaser.Game object established in the framework
-// Argument 0: Width
-// Argument 1: Height
-// Argument 2: Renderer - It can be specified to WebGL or Canvas but we'll let the interpreter decide
-// Argument 3: DOM element id in our index.html where the game will be displayed
-// Argument 4: Game states
 var game = new Phaser.Game(properties.width, properties.height, Phaser.AUTO, 'game', { preload: preload, create: create, update: update });
+
+//Initialization of global variables
+var player = {
+	y: 240,
+	height: 80,
+	score: 0
+}
 
 // All assets will be loaded in here
 function preload() {
@@ -24,5 +26,12 @@ function create() {
 
 // This is the main game loop. This function is run every frame. (The initial FPS is 60)
 function update() {
+	graphics = game.add.graphics(0, 0);
 
+	graphics.lineStyle(0);
+	graphics.beginFill(0xFFFFFF);
+	graphics.drawRect(4, player.y, 24, 24);
+	graphics.endFill();
+
+	window.graphics = graphics;
 }
