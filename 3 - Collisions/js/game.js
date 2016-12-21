@@ -44,6 +44,14 @@ function create() {
 		score: 0,
 	}
 
+	ball = {
+		x: 320,
+		y: 240,
+		height: 12,
+		hSpeed: Math.cos(Math.random()*2*Math.PI),
+		vSpeed: Math.sin(Math.random()*2*Math.PI)
+	}
+
 }
 
 // This is the main game loop. This function is run every frame. (The initial FPS is 60)
@@ -57,6 +65,25 @@ function update() {
 	if (twoUpKey.isDown && playerTwo.y > playerTwo.height/2) playerTwo.y -= 4;
 	if (twoDownKey.isDown && playerTwo.y < 480 - playerTwo.height/2) playerTwo.y += 4;
 
+	//Ball Motion
+	ball.x += ball.hSpeed;
+	ball.y -= ball.vSpeed;
+
+	//Ball Collision
+	if (ball.y <= 0 || ball.y >= properties.height) ball.vSpeed = -ball.vSpeed;
+
+	if (ball.x <= playerOne.x + 6) {
+		if (ball.y >= playerOne.y - playerOne.height/2 && ball.y <= playerOne.y + playerOne.height/2) {
+			ball.hSpeed = -ball.hSpeed;
+		}
+	}
+
+	if (ball.x >= playerTwo.x - 6) {
+		if (ball.y >= playerTwo.y - playerTwo.height/2 && ball.y <= playerTwo.y + playerTwo.height/2) {
+			ball.hSpeed = -ball.hSpeed;
+		}
+	}
+
 	//Draw Player One
 	graphics.lineStyle(12, 0xFFFFFF);
 	graphics.moveTo(playerOne.x, playerOne.y - playerOne.height/2);
@@ -65,6 +92,10 @@ function update() {
 	//Draw Player Two
 	graphics.moveTo(playerTwo.x, playerTwo.y - playerTwo.height/2);
 	graphics.lineTo(playerTwo.x, playerTwo.y + playerTwo.height/2);
+
+	//Draw Ball
+	graphics.moveTo(ball.x, ball.y - ball.height/2);
+	graphics.lineTo(ball.x, ball.y + ball.height/2);
 
 	//Set the game window to our view
 	window.graphics = graphics;
