@@ -44,13 +44,15 @@ function create() {
 		score: 0,
 	}
 
-	ball = {
+	defaultBall = {
 		x: 320,
 		y: 240,
 		height: 12,
-		hSpeed: Math.cos(Math.random()*2*Math.PI),
-		vSpeed: Math.sin(Math.random()*2*Math.PI)
+		hSpeed: 4 * Math.cos(Math.random()*2*Math.PI),
+		vSpeed: 4 * Math.sin(Math.random()*2*Math.PI)
 	}
+
+	ball = defaultBall;
 
 }
 
@@ -69,16 +71,24 @@ function update() {
 	ball.x += ball.hSpeed;
 	ball.y -= ball.vSpeed;
 
-	//Ball Collision
+	//Ball Wall Collision (Make the ball respawn if it goes out of bounds)
+	if (ball.x <= -ball.height || ball.x >= properties.width + ball.height) {
+		ball.x = 320;
+		ball.y = 240;
+		ball.hSpeed = 4 * Math.cos(Math.random()*2*Math.PI);
+		ball.vSpeed = 4 * Math.sin(Math.random()*2*Math.PI);
+	} 
 	if (ball.y <= 0 || ball.y >= properties.height) ball.vSpeed = -ball.vSpeed;
 
-	if (ball.x <= playerOne.x + 6) {
+	//Ball Player One Collision
+	if (ball.x < playerOne.x + 6 && ball.x > playerOne.x - 6) {
 		if (ball.y >= playerOne.y - playerOne.height/2 && ball.y <= playerOne.y + playerOne.height/2) {
 			ball.hSpeed = -ball.hSpeed;
 		}
 	}
 
-	if (ball.x >= playerTwo.x - 6) {
+	//Ball Player Two Collision
+	if (ball.x < playerTwo.x + 6 && ball.x > playerTwo.x - 6) {
 		if (ball.y >= playerTwo.y - playerTwo.height/2 && ball.y <= playerTwo.y + playerTwo.height/2) {
 			ball.hSpeed = -ball.hSpeed;
 		}
