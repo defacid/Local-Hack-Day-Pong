@@ -52,10 +52,10 @@ function update() {
 	graphics.clear();
 
 	//Player Controls
-	if (oneUpKey.isDown && playerOne.y > playerOne.height/2) playerOne.y -= 4;
-	if (oneDownKey.isDown && playerOne.y < 480 - playerOne.height/2) playerOne.y += 4;
-	if (twoUpKey.isDown && playerTwo.y > playerTwo.height/2) playerTwo.y -= 4;
-	if (twoDownKey.isDown && playerTwo.y < 480 - playerTwo.height/2) playerTwo.y += 4;
+	if (oneUpKey.isDown) playerOne.y -= 4;
+	if (oneDownKey.isDown) playerOne.y += 4;
+	if (twoUpKey.isDown) playerTwo.y -= 4;
+	if (twoDownKey.isDown) playerTwo.y += 4;
 
 	//Draw Player One
 	graphics.lineStyle(12, 0xFFFFFF);
